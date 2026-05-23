@@ -163,6 +163,19 @@ const App: React.FC = () => {
   const [contactPhone, setContactPhone] = useState("");
   const [contactProject, setContactProject] = useState("");
 
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const closeMobileMenu = () => setMobileMenuOpen(false);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(min-width: 1024px)');
+    const handleResize = () => {
+      if (mediaQuery.matches) setMobileMenuOpen(false);
+    };
+    mediaQuery.addEventListener('change', handleResize);
+    return () => mediaQuery.removeEventListener('change', handleResize);
+  }, []);
+
   const handleContactSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!contactName.trim() || !contactPhone.trim() || !contactProject.trim()) {
@@ -273,12 +286,19 @@ const App: React.FC = () => {
       
       {/* Navigation */}
       <nav className="fixed top-0 left-0 right-0 z-[60] px-3 sm:px-4 md:px-6 py-3 md:py-8">
-        <div className="max-w-7xl mx-auto flex justify-between items-center gap-2 glass px-3 sm:px-5 md:px-10 py-2.5 sm:py-3 md:py-5 rounded-full shadow-lg">
-          <div className="flex items-center space-x-2 sm:space-x-3 md:space-x-4 group cursor-pointer flex-shrink-0 min-w-0" onClick={() => handleNavigateView('home')}>
-            <div className="w-7 h-7 sm:w-8 sm:h-8 md:w-10 md:h-10 bg-black rounded-full flex items-center justify-center text-white font-bold text-[10px] sm:text-xs md:text-sm transition-transform group-hover:rotate-12 shadow-md">PJ</div>
-            <div className="flex flex-col min-w-0">
-              <span className="text-sm sm:text-lg md:text-xl font-bold tracking-tighter uppercase font-display leading-none truncate">Pinturas<span className="text-blue-600">Japri</span></span>
-              <span className="hidden sm:block text-[7px] md:text-[8px] uppercase tracking-[0.3em] md:tracking-[0.4em] text-slate-400 font-bold">Valencia</span>
+        <div className="max-w-7xl mx-auto relative">
+          <div className="flex justify-between items-center gap-3 glass px-4 sm:px-5 md:px-10 py-3 sm:py-3 md:py-5 rounded-full shadow-lg">
+          <div
+            className="flex items-center space-x-2 sm:space-x-3 md:space-x-4 group cursor-pointer flex-shrink-0 min-w-0"
+            onClick={() => {
+              handleNavigateView('home');
+              closeMobileMenu();
+            }}
+          >
+            <div className="w-8 h-8 md:w-10 md:h-10 bg-black rounded-full flex items-center justify-center text-white font-bold text-xs md:text-sm transition-transform group-hover:rotate-12 shadow-md flex-shrink-0">PJ</div>
+            <div className="flex flex-col min-w-0 lg:flex">
+              <span className="text-[17px] sm:text-xl md:text-xl font-bold tracking-tighter uppercase font-display leading-none whitespace-nowrap">Pinturas<span className="text-blue-600">Japri</span></span>
+              <span className="text-[7px] md:text-[8px] uppercase tracking-[0.25em] md:tracking-[0.4em] text-slate-400 font-bold">Valencia</span>
             </div>
           </div>
           
@@ -320,47 +340,64 @@ const App: React.FC = () => {
               Contacto
             </button>
           </div>
-          
-          <div className="lg:hidden flex items-center gap-0.5 sm:gap-1 min-w-0 flex-1 justify-end overflow-x-auto [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden py-0.5 pl-1">
-            <button 
-              onClick={() => handleNavigateView('home')} 
-              className={`flex-shrink-0 text-[9px] sm:text-[10px] font-bold uppercase tracking-wide px-1.5 sm:px-2 py-1.5 rounded-full transition-colors ${
-                currentView === 'home' ? 'text-blue-600 bg-blue-50' : 'text-slate-600 hover:text-blue-600'
-              }`}
-            >
-              Inicio
-            </button>
-            <button 
-              onClick={() => handleNavigateView('servicios')} 
-              className={`flex-shrink-0 text-[9px] sm:text-[10px] font-bold uppercase tracking-wide px-1.5 sm:px-2 py-1.5 rounded-full transition-colors ${
-                currentView === 'servicios' ? 'text-blue-600 bg-blue-50' : 'text-slate-600 hover:text-blue-600'
-              }`}
-            >
-              Servicios
-            </button>
-            <button 
-              onClick={() => handleNavigateView('proyectos')} 
-              className={`flex-shrink-0 text-[9px] sm:text-[10px] font-bold uppercase tracking-wide px-1.5 sm:px-2 py-1.5 rounded-full transition-colors ${
-                currentView === 'proyectos' ? 'text-blue-600 bg-blue-50' : 'text-slate-600 hover:text-blue-600'
-              }`}
-            >
-              Proyectos
-            </button>
-            <button 
-              onClick={() => handleNavigateView('metodo')} 
-              className={`flex-shrink-0 text-[9px] sm:text-[10px] font-bold uppercase tracking-wide px-1.5 sm:px-2 py-1.5 rounded-full transition-colors ${
-                currentView === 'metodo' ? 'text-blue-600 bg-blue-50' : 'text-slate-600 hover:text-blue-600'
-              }`}
-            >
-              Método
-            </button>
-            <button 
-              onClick={handleContactAction} 
-              className="flex-shrink-0 bg-black text-white px-2 sm:px-2.5 py-1.5 sm:py-2 rounded-full text-[8px] sm:text-[9px] font-bold uppercase tracking-wider shadow-md hover:bg-blue-600 ml-0.5"
-            >
-              Contacto
-            </button>
+
+          <button
+            type="button"
+            className="lg:hidden flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-full border border-stone-200 bg-white text-slate-800 shadow-sm hover:bg-stone-50 transition-colors"
+            aria-label={mobileMenuOpen ? 'Cerrar menú' : 'Abrir menú'}
+            aria-expanded={mobileMenuOpen}
+            onClick={() => setMobileMenuOpen((open) => !open)}
+          >
+            {mobileMenuOpen ? (
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            ) : (
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            )}
+          </button>
           </div>
+
+          {mobileMenuOpen && (
+            <>
+              <button
+                type="button"
+                className="lg:hidden fixed inset-0 z-[55] bg-black/40"
+                aria-label="Cerrar menú"
+                onClick={closeMobileMenu}
+              />
+              <div className="lg:hidden absolute left-0 right-0 top-full z-[61] mt-2 px-1">
+                <div className="glass rounded-3xl border border-stone-200/80 shadow-2xl p-3 flex flex-col gap-2">
+                  {[
+                    { label: 'Inicio', action: () => handleNavigateView('home'), active: currentView === 'home' },
+                    { label: 'Servicios', action: () => handleNavigateView('servicios'), active: currentView === 'servicios' },
+                    { label: 'Proyectos', action: () => handleNavigateView('proyectos'), active: currentView === 'proyectos' },
+                    { label: 'Contacto', action: handleContactAction, active: false },
+                  ].map((item) => (
+                    <button
+                      key={item.label}
+                      type="button"
+                      onClick={() => {
+                        item.action();
+                        closeMobileMenu();
+                      }}
+                      className={`w-full text-left rounded-2xl px-5 py-4 text-base font-bold uppercase tracking-wide transition-colors ${
+                        item.label === 'Contacto'
+                          ? 'bg-black text-white hover:bg-blue-600'
+                          : item.active
+                            ? 'bg-blue-50 text-blue-600'
+                            : 'text-slate-700 hover:bg-stone-100'
+                      }`}
+                    >
+                      {item.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </>
+          )}
         </div>
       </nav>
 
