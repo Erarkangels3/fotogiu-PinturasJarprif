@@ -284,10 +284,12 @@ const App: React.FC = () => {
     if (currentView === 'home') {
       handleScrollToSection('contact');
     } else if (currentView === 'servicios') {
+      closeMobileMenu();
       const el = document.getElementById('presupuestador');
       if (el) el.scrollIntoView({ behavior: 'smooth' });
     } else {
-      window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+      closeMobileMenu();
+      handleScrollToSection('contact');
     }
   };
 
@@ -297,7 +299,7 @@ const App: React.FC = () => {
       {/* Navigation */}
       <nav className="fixed top-0 left-0 right-0 z-[60] px-3 sm:px-4 md:px-6 py-3 md:py-8">
         <div className="max-w-7xl mx-auto relative">
-          <div className="flex justify-between items-center gap-3 glass px-4 sm:px-5 md:px-10 py-3 sm:py-3 md:py-5 rounded-full shadow-lg">
+          <div className="flex justify-between items-center gap-3 glass px-4 sm:px-5 md:px-10 py-3 sm:py-3 md:py-5 rounded-full shadow-lg max-lg:bg-white max-lg:[backdrop-filter:none] max-lg:[-webkit-backdrop-filter:none]">
           <div
             className="flex items-center space-x-2 sm:space-x-3 md:space-x-4 group cursor-pointer flex-shrink-0 min-w-0"
             onClick={() => {

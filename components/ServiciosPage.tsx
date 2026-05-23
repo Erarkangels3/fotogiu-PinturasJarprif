@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { motion } from 'motion/react';
 import { 
   Home, Paintbrush, Sliders, ShieldAlert, Sparkles, Building, 
   Warehouse, Shield, Droplet, Layers, CheckCircle2, 
@@ -191,7 +190,7 @@ export const ServiciosPage: React.FC<ServiciosPageProps> = ({
         {/* Tab Controls — móvil: franja con degradado; escritorio: sin cambios */}
         <div className="mb-12 md:border-b md:border-stone-200 md:pb-4">
           <div className="md:hidden p-[2px] rounded-2xl bg-gradient-to-r from-blue-700 via-blue-500 to-indigo-600 shadow-lg shadow-blue-600/25 mb-1">
-            <div className="flex gap-2 overflow-x-auto p-2.5 bg-stone-50/95 rounded-[14px] snap-x snap-mandatory [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+            <div className="flex gap-2 overflow-x-auto overscroll-x-contain touch-pan-x p-2.5 bg-stone-50/95 rounded-[14px] snap-x snap-mandatory [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
               {(Object.keys(servicesData) as Array<keyof typeof servicesData>).map((key) => {
                 const isActive = activeCategory === key;
                 const label =
@@ -242,7 +241,7 @@ export const ServiciosPage: React.FC<ServiciosPageProps> = ({
         {/* Dynamic Category View */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 mb-24">
           {/* Column Left: Category intro */}
-          <div className="lg:col-span-4 lg:sticky lg:top-36 h-fit bg-white rounded-3xl p-8 border border-stone-200 shadow-sm">
+          <div className="lg:col-span-4 max-lg:static lg:sticky lg:top-36 h-fit bg-white rounded-3xl p-8 border border-stone-200 shadow-sm">
             <h2 className="text-3xl font-display italic text-slate-950 mb-6">{servicesData[activeCategory].title}</h2>
             <p className="text-slate-500 font-light leading-relaxed mb-8 text-sm">
               {servicesData[activeCategory].description}
@@ -266,11 +265,8 @@ export const ServiciosPage: React.FC<ServiciosPageProps> = ({
           {/* Column Right: Specific Services list */}
           <div className="lg:col-span-8 space-y-6">
             {servicesData[activeCategory].items.map((item, id) => (
-              <motion.div 
-                initial={{ opacity: 0, y: 15 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, delay: id * 0.1 }}
-                key={id} 
+              <div 
+                key={`${activeCategory}-${id}`}
                 className="bg-white p-8 rounded-3xl border border-stone-100 shadow-sm hover:shadow-xl hover:border-blue-100 transition-all flex flex-col md:flex-row gap-6 md:items-start"
               >
                 <div className="w-14 h-14 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center flex-shrink-0">
@@ -286,14 +282,14 @@ export const ServiciosPage: React.FC<ServiciosPageProps> = ({
                     <span>{item.highlight}</span>
                   </div>
                 </div>
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>
 
         {/* Interactive Budget Estimator Tool */}
-        <section id="presupuestador" className="bg-black text-white rounded-[3rem] p-8 md:p-16 shadow-2xl relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-96 h-96 bg-blue-900/10 rounded-full blur-[150px] pointer-events-none"></div>
+        <section id="presupuestador" className="bg-black text-white rounded-[3rem] p-8 md:p-16 shadow-2xl relative max-lg:overflow-visible lg:overflow-hidden">
+          <div className="absolute top-0 right-0 w-96 h-96 bg-blue-900/10 rounded-full blur-[150px] pointer-events-none hidden lg:block"></div>
           
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10">
             {/* Left Col: Description & Controls */}

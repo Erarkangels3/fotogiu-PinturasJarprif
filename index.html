@@ -18,7 +18,13 @@
             background-color: var(--bg-light);
             color: var(--text-dark);
             scroll-behavior: smooth;
-            overflow-x: hidden;
+            overflow-x: clip;
+            -webkit-overflow-scrolling: touch;
+        }
+        @media (max-width: 1023px) {
+            body {
+                scroll-behavior: auto;
+            }
         }
         .font-display {
             font-family: 'Fraunces', serif;
