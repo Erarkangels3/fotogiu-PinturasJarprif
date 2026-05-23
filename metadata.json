@@ -1,0 +1,8 @@
+{
+  "name": "Pinturas Japri - Maestros del Color",
+  "description": "Servicios profesionales de pintura en Valencia y alrededores. Especialistas en viviendas, chalets, locales comerciales y rehabilitación de fachadas.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
