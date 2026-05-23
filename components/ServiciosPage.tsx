@@ -253,7 +253,7 @@ export const ServiciosPage: React.FC<ServiciosPageProps> = ({
               </div>
               <div className="flex items-center space-x-3 text-xs font-semibold text-slate-800">
                 <CheckCircle2 className="w-5 h-5 text-blue-600 flex-shrink-0" />
-                <span>Garantía garantizada por escrito de 3 años</span>
+                <span>Garantía de 3 años</span>
               </div>
               <div className="flex items-center space-x-3 text-xs font-semibold text-slate-800">
                 <CheckCircle2 className="w-5 h-5 text-blue-600 flex-shrink-0" />
