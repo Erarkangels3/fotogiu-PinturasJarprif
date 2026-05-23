@@ -15,6 +15,7 @@ export const ProyectosPage: React.FC<ProyectosPageProps> = ({ onBackToHome, onNa
   // Slider states for interactive Before/After sliders
   const [sliderPos1, setSliderPos1] = useState<number>(50);
   const [sliderPos2, setSliderPos2] = useState<number>(50);
+  const [sliderPos3, setSliderPos3] = useState<number>(50);
 
   // Active view inside projects
   const [filter, setFilter] = useState<'todos' | 'residencial' | 'exterior' | 'lacados'>('todos');
@@ -26,6 +27,10 @@ export const ProyectosPage: React.FC<ProyectosPageProps> = ({ onBackToHome, onNa
 
   const handleSliderChange2 = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSliderPos2(Number(e.target.value));
+  };
+
+  const handleSliderChange3 = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSliderPos3(Number(e.target.value));
   };
 
   return (
@@ -69,38 +74,38 @@ export const ProyectosPage: React.FC<ProyectosPageProps> = ({ onBackToHome, onNa
         {/* Projects List */}
         <div className="space-y-32">
           
-          {/* PROYECTO 1: Salón con Alisado (Imágenes 1 y 2) */}
+          {/* PROYECTO 1: Patio y fachada trasera */}
           <section className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-            {/* Left Col: Slider (1 y 2) */}
-            <div className="lg:col-span-7">
-              <div className="relative aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl border border-stone-200 select-none">
+            {/* Left Col: Slider */}
+            <div className="lg:col-span-7 max-w-lg mx-auto lg:max-w-none lg:mx-0 w-full">
+              <div className="relative aspect-[3/4] rounded-3xl overflow-hidden shadow-2xl border border-stone-200 select-none">
                 
-                {/* BEFORE IMAGE (Default underlying) - REPRESENTING IMAGE '1' */}
+                {/* BEFORE IMAGE */}
                 <div className="absolute inset-0 bg-stone-250">
                   <img 
-                    src="https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&q=80&w=1200" 
-                    alt="Salón con Gotelé - Antes de Pintar Japri" 
-                    className="w-full h-full object-cover filter saturate-50 contrast-125 brightness-90"
+                    src="/projects/jarpri/proyecto-1-antes.jpg" 
+                    alt="Patio exterior con fachada deteriorada - Antes Japri" 
+                    className="w-full h-full object-cover object-center"
                   />
                   {/* Before label */}
                   <div className="absolute top-4 left-4 bg-red-600/90 text-white font-mono font-bold text-[9px] uppercase tracking-widest px-3 py-1.5 rounded-md z-20">
-                    ANTES (Imagen 1) - Gotelé y Desconchones
+                    ANTES - Fachada desgastada y parcheado
                   </div>
                 </div>
 
-                {/* AFTER IMAGE (Clipped Overlay) - REPRESENTING IMAGE '2' */}
+                {/* AFTER IMAGE (Clipped Overlay) */}
                 <div 
                   className="absolute inset-0 pointer-events-none"
                   style={{ clipPath: `polygon(0 0, ${sliderPos1}% 0, ${sliderPos1}% 100%, 0 100%)` }}
                 >
                   <img 
-                    src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&q=80&w=1200" 
-                    alt="Salón Alisado Espejo - Después de Pintar Japri" 
-                    className="w-full h-full object-cover"
+                    src="/projects/jarpri/proyecto-1-despues.jpg" 
+                    alt="Patio exterior renovado en blanco - Después Japri" 
+                    className="w-full h-full object-cover object-center"
                   />
                   {/* After label */}
-                  <div className="absolute top-4 left-4 bg-emerald-600/90 text-white font-mono font-bold text-[9px] uppercase tracking-widest px-3 py-1.5 rounded-md z-25">
-                    DESPUÉS (Imagen 2) - Alisado Premium Japri
+                  <div className="absolute top-4 right-4 bg-emerald-600/90 text-white font-mono font-bold text-[9px] uppercase tracking-widest px-3 py-1.5 rounded-md z-25">
+                    DESPUÉS - Acabado blanco uniforme Japri
                   </div>
                 </div>
 
@@ -126,72 +131,72 @@ export const ProyectosPage: React.FC<ProyectosPageProps> = ({ onBackToHome, onNa
                 />
               </div>
               <div className="flex justify-between text-[10px] font-bold text-slate-400 mt-4 uppercase tracking-widest">
-                <span>← Arrastre para comparar el gotelé</span>
+                <span>← Arrastre para comparar el patio</span>
                 <span>Pulsación táctil o arrastre el círculo</span>
               </div>
             </div>
 
             {/* Right Col: Text Description & Analyses */}
             <div className="lg:col-span-5 flex flex-col justify-center">
-              <span className="text-blue-600 font-bold tracking-[0.3em] uppercase text-[10px] mb-3 md:mb-4 block">Proyecto 1 · Valencia Capital</span>
+              <span className="text-blue-600 font-bold tracking-[0.3em] uppercase text-[10px] mb-3 md:mb-4 block">Proyecto 1 · Jávea · Vivienda unifamiliar</span>
               <h3 className="text-3xl md:text-5xl font-display italic leading-tight text-slate-950 mb-6">
-                Alisado y Renovación <br />Completa de Salón
+                Patio y Fachada Trasera: <br />Renovación Integral
               </h3>
               
               <p className="text-slate-500 font-light leading-relaxed mb-6 text-sm">
-                Un piso residencial clásico de los años 80 en Valencia sufría de gotelé agresivo amarilleado por los años, con pequeñas microfisuras por asentamiento. Se procedió al lijado, tendido de masilla especial Japri y acabado liso impecable.
+                Vivienda unifamiliar con patio interior y fachada trasera muy castigada por el sol y la humedad marina. La pintura salmón original había perdido brillo, con grietas y zonas de parcheado visibles en los paramentos laterales. Japri ejecutó la preparación completa y la renovación cromática en blanco de alta luminosidad.
               </p>
 
               <div className="space-y-4 border-t border-stone-200 pt-6">
                 <div>
-                  <h4 className="text-xs font-bold uppercase tracking-wider text-slate-800 mb-1">Estado Anterior (Imagen 1):</h4>
-                  <p className="text-xs text-slate-500 font-light">Superficies con textura rugosa, oclusión de luz y grietas de dilatación visibles cerca del marco del ventanal.</p>
+                  <h4 className="text-xs font-bold uppercase tracking-wider text-slate-800 mb-1">Estado anterior:</h4>
+                  <p className="text-xs text-slate-500 font-light">Paredes exteriores descoloridas, fisuras reparadas con masilla a la vista y acabado irregular en terraza, escalera y zona de garaje.</p>
                 </div>
                 <div>
-                  <h4 className="text-xs font-bold uppercase tracking-wider text-blue-600 mb-1">Resultado Final (Imagen 2):</h4>
-                  <p className="text-xs text-slate-500 font-light">Paredes perfectamente lisas acabadas con pintura plástica mate sedosa color caliza. Sensación de amplitud mejorada un 40%.</p>
+                  <h4 className="text-xs font-bold uppercase tracking-wider text-blue-600 mb-1">Resultado final:</h4>
+                  <p className="text-xs text-slate-500 font-light">Fachada y patio en blanco puro con acabado homogéneo, mayor luminosidad y contraste elegante con barandillas, rejas y suelo cerámico.</p>
                 </div>
               </div>
 
               <div className="mt-8 flex gap-4">
-                <span className="px-4 py-2 bg-stone-100 text-slate-700 text-[10px] font-bold uppercase tracking-wider rounded-lg">3 Días de ejecución</span>
+                <span className="px-4 py-2 bg-stone-100 text-slate-700 text-[10px] font-bold uppercase tracking-wider rounded-lg">5 Días de ejecución</span>
                 <span className="px-4 py-2 bg-stone-100 text-slate-700 text-[10px] font-bold uppercase tracking-wider rounded-lg">Garantía Japri 3 años</span>
               </div>
             </div>
           </section>
 
-          {/* PROYECTO 2: Fachada de Chalet (Imágenes 3 y 4) */}
+          {/* PROYECTO 2: Terraza exterior */}
           <section className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center lg:flex-row-reverse">
-            {/* Left Col: Slider (3 y 4) */}
-            <div className="lg:col-span-7 lg:order-last">
-              <div className="relative aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl border border-stone-200 select-none">
+            {/* Left Col: Slider */}
+            <div className="lg:col-span-7 lg:order-last max-w-lg mx-auto lg:max-w-none lg:mx-0 w-full">
+              <div className="relative aspect-[3/4] rounded-3xl overflow-hidden shadow-2xl border border-stone-200 select-none">
                 
-                {/* BEFORE IMAGE - REPRESENTING IMAGE '3' */}
+                {/* BEFORE IMAGE */}
                 <div className="absolute inset-0 bg-stone-250">
                   <img 
-                    src="https://images.unsplash.com/photo-1595841696677-5188bb0d022b?auto=format&fit=crop&q=80&w=1200" 
-                    alt="Chalet con fachada dañada - Antes" 
-                    className="w-full h-full object-cover filter saturate-50 contrast-110 brightness-75 bg-top"
+                    src="/projects/jarpri/proyecto-2-antes.jpg" 
+                    alt="Terraza exterior con paredes deterioradas - Antes Japri" 
+                    className="w-full h-full object-cover object-center"
                   />
                   {/* Before label */}
                   <div className="absolute top-4 left-4 bg-red-600/90 text-white font-mono font-bold text-[9px] uppercase tracking-widest px-3 py-1.5 rounded-md z-20">
-                    ANTES (Imagen 3) - Deterioro Lumínico y Fisuras
+                    ANTES - Pintura desconchada y manchas
                   </div>
                 </div>
 
-                {/* AFTER IMAGE - REPRESENTING IMAGE '4' */}
+                {/* AFTER IMAGE */}
                 <div 
                   className="absolute inset-0 pointer-events-none"
                   style={{ clipPath: `polygon(0 0, ${sliderPos2}% 0, ${sliderPos2}% 100%, 0 100%)` }}
                 >
                   <img 
-                    src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&q=80&w=1200" 
-                    alt="Chalet con Fachada Siloxánica - Después" 
-                    className="w-full h-full object-cover bg-top"
+                    src="/projects/jarpri/proyecto-2-despues.jpg" 
+                    alt="Terraza exterior renovada en blanco - Después Japri" 
+                    className="w-full h-full object-cover object-center"
                   />
                   {/* After label */}
-                  <div className="absolute top-4 left-4 bg-emerald-600/90 text-white font-mono font-bold text-[9px] uppercase tracking-widest px-3 py-1.5 rounded-md z-25">
-                    DESPUÉS (Imagen 4) - Revestimiento Hidrófugo Japri
+                  <div className="absolute top-4 right-4 bg-emerald-600/90 text-white font-mono font-bold text-[9px] uppercase tracking-widest px-3 py-1.5 rounded-md z-25">
+                    DESPUÉS - Fachada blanca y acabado impecable
                   </div>
                 </div>
 
@@ -217,105 +222,113 @@ export const ProyectosPage: React.FC<ProyectosPageProps> = ({ onBackToHome, onNa
                 />
               </div>
               <div className="flex justify-between text-[10px] font-bold text-slate-400 mt-4 uppercase tracking-widest">
-                <span>← Compare el exterior del chalet</span>
+                <span>← Compare la terraza exterior</span>
                 <span>Pulsación táctil o arrastre el círculo</span>
               </div>
             </div>
 
             {/* Right Col: text description */}
             <div className="lg:col-span-5 flex flex-col justify-center">
-              <span className="text-blue-600 font-bold tracking-[0.3em] uppercase text-[10px] mb-3 md:mb-4 block">Proyecto 2 · L'Eliana - Chalet Unifamiliar</span>
+              <span className="text-blue-600 font-bold tracking-[0.3em] uppercase text-[10px] mb-3 md:mb-4 block">Proyecto 2 · Jávea · Terraza y fachada</span>
               <h3 className="text-3xl md:text-5xl font-display italic leading-tight text-slate-950 mb-6">
-                Chalet Premium: <br />Fachada e Impermeabilización
+                Terraza Exterior: <br />Pintura y Renovación
               </h3>
               
               <p className="text-slate-500 font-light leading-relaxed mb-6 text-sm">
-                Tratamiento técnico integral en chalet unifamiliar. Se presentaban zonas con eflorescencias salinas y pérdida de revestimiento original. Aplicamos fijador acrílico de penetración y dos manos de pintura siloxánica de máxima elasticidad y durabilidad.
+                Terraza acristalada con paramentos en tono beige muy deteriorado: desconchones, manchas de humedad y pérdida de protección frente al sol costero. Realizamos saneamiento de superficies, fijación y aplicación de pintura para exteriores en blanco luminoso, respetando carpintería, toldo y canalones.
               </p>
 
               <div className="space-y-4 border-t border-stone-200 pt-6">
                 <div>
-                  <h4 className="text-xs font-bold uppercase tracking-wider text-slate-800 mb-1">Estado Anterior (Imagen 3):</h4>
-                  <p className="text-xs text-slate-500 font-light">Paredes exteriores peladas por el sol de Valencia, presencia constante de moho en caras orientadas al norte e infiltración fina en el dintel.</p>
+                  <h4 className="text-xs font-bold uppercase tracking-wider text-slate-800 mb-1">Estado anterior:</h4>
+                  <p className="text-xs text-slate-500 font-light">Paredes con pintura levantada en la zona izquierda, tono amarillento apagado y aspecto general de abandono en un espacio de uso diario.</p>
                 </div>
                 <div>
-                  <h4 className="text-xs font-bold uppercase tracking-wider text-blue-600 mb-1">Resultado Final (Imagen 4):</h4>
-                  <p className="text-xs text-slate-500 font-light">Fachada blanca pulcra con alta repelencia al agua, tratamiento fungicida profundo y elementos de madera y hierro protegidos con lasures satinados.</p>
+                  <h4 className="text-xs font-bold uppercase tracking-wider text-blue-600 mb-1">Resultado final:</h4>
+                  <p className="text-xs text-slate-500 font-light">Acabado blanco uniforme que multiplica la luz natural, integrado con la carpintería blanca y el toldo a rayas para un conjunto limpio y actual.</p>
                 </div>
               </div>
 
               <div className="mt-8 flex gap-4">
-                <span className="px-4 py-2 bg-stone-100 text-slate-700 text-[10px] font-bold uppercase tracking-wider rounded-lg">6 Días de trabajo</span>
-                <span className="px-4 py-2 bg-stone-100 text-slate-700 text-[10px] font-bold uppercase tracking-wider rounded-lg">Protección 5 Años</span>
+                <span className="px-4 py-2 bg-stone-100 text-slate-700 text-[10px] font-bold uppercase tracking-wider rounded-lg">4 Días de trabajo</span>
+                <span className="px-4 py-2 bg-stone-100 text-slate-700 text-[10px] font-bold uppercase tracking-wider rounded-lg">Protección 5 años</span>
               </div>
             </div>
           </section>
 
-          {/* PROYECTO 3: Carpintería / Lacado y Paredes (Imágenes 4, 5 y 6 juntas) */}
+          {/* PROYECTO 3: Dormitorio con líneas decorativas */}
           <section className="bg-white rounded-3xl p-8 md:p-16 border border-stone-200 shadow-sm">
             <div className="max-w-3xl mb-12">
-              <span className="text-blue-600 font-bold tracking-[0.3em] uppercase text-[10px] mb-3 md:mb-4 block">Proyecto 3 · Paterna / Piso Completo</span>
+              <span className="text-blue-600 font-bold tracking-[0.3em] uppercase text-[10px] mb-3 md:mb-4 block">Proyecto 3 · Jávea · Dormitorio principal</span>
               <h3 className="text-3xl md:text-5xl font-display italic leading-tight text-slate-950 mb-4">
-                Piso Completo: Antes, Proceso y Lacado (4, 5 y 6)
+                Dormitorio: De Franjas Clásicas <br />a Diseño Geométrico
               </h3>
               <p className="text-slate-500 font-light text-sm md:text-base leading-relaxed">
-                Este proyecto representa a la perfección el por qué de nuestra fama Japri: la unión de tres fases secuenciales en un piso clásico con puertas de sapeli oscuro deterioradas, transformándolas a un lacado blanco de tacto seda con paredes ocre pasadas a gris perla. No recurrimos a un lacado rápido a brocha, sino a un meticuloso trabajo con pistola Airless.
+                Renovación completa de la pared de cabecera en dormitorio principal. El acabado anterior combinaba franjas verticales granate y beige con textura tipo estuco, un estilo que oscurecía la estancia. Japri alisó la superficie y ejecutó un diseño contemporáneo con líneas decorativas en chevrón y laterales en color púrpura, con encintado de precisión y pintura plástica de alta calidad.
               </p>
             </div>
 
-            {/* Tri-image progression layout */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
-              {/* IMAGE 4: ANTES */}
-              <div className="bg-stone-50 rounded-2xl p-4 border border-stone-150 shadow-xs">
-                <div className="relative aspect-[4/3] rounded-xl overflow-hidden mb-4">
-                  <img 
-                    src="https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&q=80&w=500" 
-                    alt="Puertas y paredes sapeli oscuro - Antes Japri" 
-                    className="w-full h-full object-cover filter sepia duration-300"
-                  />
-                  <div className="absolute top-2 left-2 bg-red-600 text-white font-mono font-bold text-[8px] px-2 py-1 rounded">
-                    01. ANTES (Imagen 4)
-                  </div>
+            {/* Slider antes/después */}
+            <div className="relative aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl border border-stone-200 select-none mb-6">
+              <div className="absolute inset-0 bg-stone-250">
+                <img 
+                  src="/projects/jarpri/proyecto-3-antes.jpg" 
+                  alt="Dormitorio con franjas decorativas antiguas - Antes Japri" 
+                  className="w-full h-full object-cover object-center"
+                />
+                <div className="absolute top-4 left-4 bg-red-600/90 text-white font-mono font-bold text-[9px] uppercase tracking-widest px-3 py-1.5 rounded-md z-20">
+                  ANTES - Franjas y acabado texturizado
                 </div>
-                <h4 className="text-xs font-bold text-slate-900 mb-2">Paredes Ocre & Sapeli</h4>
-                <p className="text-xs text-slate-500 font-light leading-relaxed">
-                  Paredes ocre desgastadas que restaban luz natural, con carpintería interior en barnizada clásico de tono castaño muy oscuro que empequeñecía el recibidor.
-                </p>
               </div>
 
-              {/* IMAGE 5: PROCESO */}
-              <div className="bg-stone-50 rounded-2xl p-4 border border-stone-150 shadow-xs">
-                <div className="relative aspect-[4/3] rounded-xl overflow-hidden mb-4">
-                  <img 
-                    src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&q=80&w=500" 
-                    alt="Proceso de lijado, protección y base primer Japri" 
-                    className="w-full h-full object-cover brightness-95"
-                  />
-                  <div className="absolute top-2 left-2 bg-blue-600 text-white font-mono font-bold text-[8px] px-2 py-1 rounded">
-                    02. PROCESO (Imagen 5)
-                  </div>
+              <div 
+                className="absolute inset-0 pointer-events-none"
+                style={{ clipPath: `polygon(0 0, ${sliderPos3}% 0, ${sliderPos3}% 100%, 0 100%)` }}
+              >
+                <img 
+                  src="/projects/jarpri/proyecto-3-despues.jpg" 
+                  alt="Dormitorio con diseño geométrico - Después Japri" 
+                  className="w-full h-full object-cover object-center"
+                />
+                <div className="absolute top-4 right-4 bg-emerald-600/90 text-white font-mono font-bold text-[9px] uppercase tracking-widest px-3 py-1.5 rounded-md z-25">
+                  DESPUÉS - Líneas decorativas y alisado Japri
                 </div>
-                <h4 className="text-xs font-bold text-slate-900 mb-2">Preparación Quirúrgica</h4>
-                <p className="text-xs text-slate-500 font-light leading-relaxed">
-                  Lijado exhaustivo de las puertas, aplicación de micro-imprimación para un sellado perfecto y protección de cada rincón del suelo con fieltro protector.
-                </p>
               </div>
 
-              {/* IMAGE 6: DESPUÉS */}
-              <div className="bg-stone-50 rounded-2xl p-4 border border-stone-150 shadow-xs">
-                <div className="relative aspect-[4/3] rounded-xl overflow-hidden mb-4">
-                  <img 
-                    src="https://images.unsplash.com/photo-1618219908412-a29a1bb7b86e?auto=format&fit=crop&q=80&w=500" 
-                    alt="Lacado y paredes perfectas - Después Japri" 
-                    className="w-full h-full object-cover"
-                  />
-                  <div className="absolute top-2 left-2 bg-emerald-600 text-white font-mono font-bold text-[8px] px-2 py-1 rounded">
-                    03. DESPUÉS (Imagen 6)
-                  </div>
+              <div 
+                className="absolute top-0 bottom-0 w-[3px] bg-white cursor-ew-resize z-30 shadow-2xl"
+                style={{ left: `${sliderPos3}%` }}
+              >
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-10 h-10 bg-blue-600 hover:bg-black text-white rounded-full flex items-center justify-center shadow-2xl border-2 border-white transition-colors">
+                  <ArrowLeftRight className="w-4 h-4" />
                 </div>
-                <h4 className="text-xs font-bold text-slate-900 mb-2">Resultado Final Impecable</h4>
+              </div>
+
+              <input 
+                type="range" 
+                min="0" 
+                max="100" 
+                value={sliderPos3} 
+                onChange={handleSliderChange3}
+                className="absolute inset-0 opacity-0 w-full h-full cursor-ew-resize z-40" 
+              />
+            </div>
+            <div className="flex justify-between text-[10px] font-bold text-slate-400 mb-10 uppercase tracking-widest">
+              <span>← Arrastre para comparar el dormitorio</span>
+              <span>Pulsación táctil o arrastre el círculo</span>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
+              <div className="bg-stone-50 rounded-2xl p-4 border border-stone-150">
+                <h4 className="text-xs font-bold text-slate-900 mb-2 uppercase tracking-wider">Estado anterior</h4>
                 <p className="text-xs text-slate-500 font-light leading-relaxed">
-                  Paredes pintadas en gris perla luminoso que multiplican el espacio, combinadas con carpintería lacada en blanco puro satinado mediante pistola Airless.
+                  Pared de cabecera con líneas verticales en granate y beige con acabado moteado, estética recargada que restaba amplitud al dormitorio.
+                </p>
+              </div>
+              <div className="bg-stone-50 rounded-2xl p-4 border border-stone-150">
+                <h4 className="text-xs font-bold text-blue-600 mb-2 uppercase tracking-wider">Resultado final</h4>
+                <p className="text-xs text-slate-500 font-light leading-relaxed">
+                  Superficie alisada con diseño geométrico en chevrón, base blanca y laterales en púrpura. Acabado nítido, moderno y totalmente personalizado.
                 </p>
               </div>
             </div>
@@ -325,13 +338,13 @@ export const ProyectosPage: React.FC<ProyectosPageProps> = ({ onBackToHome, onNa
               <div className="flex gap-3">
                 <CheckCircle2 className="w-5 h-5 text-emerald-600 flex-shrink-0 mt-0.5" />
                 <div>
-                  <strong className="text-slate-800">Cero imperfecciones:</strong> El lacado a pistola de Japri garantiza un acabado absolutamente uniforme y liso al tacto, sin estrías de brocha ni goterones típicos de aficionados.
+                  <strong className="text-slate-800">Precisión milimétrica:</strong> El encintado profesional de Japri garantiza líneas decorativas perfectamente rectas, sin sangrados ni irregularidades en el diseño geométrico.
                 </div>
               </div>
               <div className="flex gap-3">
                 <CheckCircle2 className="w-5 h-5 text-emerald-600 flex-shrink-0 mt-0.5" />
                 <div>
-                  <strong className="text-slate-800">Máxima adherencia:</strong> Utilizamos imprimación epoxídica base agua sin olores molestos, garantizando que el color no se salte ni se cuartee con los inevitables golpes del día a día.
+                  <strong className="text-slate-800">Alisado previo:</strong> Eliminamos la textura y el patrón antiguo con masilla y lijado fino antes de aplicar la base, asegurando un acabado liso y duradero.
                 </div>
               </div>
             </div>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
 import { 
   Home, Paintbrush, Sliders, ShieldAlert, Sparkles, Building, 
@@ -6,13 +6,24 @@ import {
   Calculator, ArrowRight, CornerDownRight, Landmark
 } from 'lucide-react';
 
+export type ServicioCategory = 'residencial' | 'exterior' | 'comercial' | 'tecnico';
+
 interface ServiciosPageProps {
   onBackToHome: () => void;
   onNavigateToContact: () => void;
+  initialCategory?: ServicioCategory;
 }
 
-export const ServiciosPage: React.FC<ServiciosPageProps> = ({ onBackToHome, onNavigateToContact }) => {
-  const [activeCategory, setActiveCategory] = useState<'residencial' | 'exterior' | 'comercial' | 'tecnico'>('residencial');
+export const ServiciosPage: React.FC<ServiciosPageProps> = ({ 
+  onBackToHome, 
+  onNavigateToContact,
+  initialCategory = 'residencial',
+}) => {
+  const [activeCategory, setActiveCategory] = useState<ServicioCategory>(initialCategory);
+
+  useEffect(() => {
+    setActiveCategory(initialCategory);
+  }, [initialCategory]);
   
   // Custom calculator state
   const [surfaceSize, setSurfaceSize] = useState<number>(80);
@@ -177,27 +188,55 @@ export const ServiciosPage: React.FC<ServiciosPageProps> = ({ onBackToHome, onNa
           </div>
         </div>
 
-        {/* Tab Controls */}
-        <div className="flex flex-wrap gap-2 md:gap-4 mb-12 border-b border-stone-200 pb-4">
-          {(Object.keys(servicesData) as Array<keyof typeof servicesData>).map((key) => {
-            const isActive = activeCategory === key;
-            return (
-              <button
-                key={key}
-                onClick={() => setActiveCategory(key)}
-                className={`px-6 py-3 rounded-full text-[10px] font-bold uppercase tracking-widest transition-all ${
-                  isActive 
-                    ? 'bg-blue-600 text-white shadow-xl shadow-blue-600/20' 
-                    : 'bg-white text-slate-500 hover:bg-stone-100 hover:text-slate-900'
-                }`}
-              >
-                {key === 'residencial' && "Residencial"}
-                {key === 'exterior' && "Fachadas y Exteriores"}
-                {key === 'comercial' && "Comercial e Industrial"}
-                {key === 'tecnico' && "Técnico y Decorativo"}
-              </button>
-            );
-          })}
+        {/* Tab Controls — móvil: franja con degradado; escritorio: sin cambios */}
+        <div className="mb-12 md:border-b md:border-stone-200 md:pb-4">
+          <div className="md:hidden p-[2px] rounded-2xl bg-gradient-to-r from-blue-700 via-blue-500 to-indigo-600 shadow-lg shadow-blue-600/25 mb-1">
+            <div className="flex gap-2 overflow-x-auto p-2.5 bg-stone-50/95 rounded-[14px] snap-x snap-mandatory [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+              {(Object.keys(servicesData) as Array<keyof typeof servicesData>).map((key) => {
+                const isActive = activeCategory === key;
+                const label =
+                  key === 'residencial' ? 'Residencial'
+                  : key === 'exterior' ? 'Fachadas y Exteriores'
+                  : key === 'comercial' ? 'Comercial e Industrial'
+                  : 'Técnico y Decorativo';
+                return (
+                  <button
+                    key={key}
+                    onClick={() => setActiveCategory(key)}
+                    className={`flex-shrink-0 snap-start px-4 py-2.5 rounded-xl text-[9px] font-bold uppercase tracking-wider transition-all border ${
+                      isActive
+                        ? 'bg-blue-600 text-white border-blue-600 shadow-md shadow-blue-600/30'
+                        : 'bg-white text-slate-600 border-stone-200 shadow-sm'
+                    }`}
+                  >
+                    {label}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          <div className="hidden md:flex flex-wrap gap-4">
+            {(Object.keys(servicesData) as Array<keyof typeof servicesData>).map((key) => {
+              const isActive = activeCategory === key;
+              return (
+                <button
+                  key={key}
+                  onClick={() => setActiveCategory(key)}
+                  className={`px-6 py-3 rounded-full text-[10px] font-bold uppercase tracking-widest transition-all ${
+                    isActive 
+                      ? 'bg-blue-600 text-white shadow-xl shadow-blue-600/20' 
+                      : 'bg-white text-slate-500 hover:bg-stone-100 hover:text-slate-900'
+                  }`}
+                >
+                  {key === 'residencial' && "Residencial"}
+                  {key === 'exterior' && "Fachadas y Exteriores"}
+                  {key === 'comercial' && "Comercial e Industrial"}
+                  {key === 'tecnico' && "Técnico y Decorativo"}
+                </button>
+              );
+            })}
+          </div>
         </div>
 
         {/* Dynamic Category View */}

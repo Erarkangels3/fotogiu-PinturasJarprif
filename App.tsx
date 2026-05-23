@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import ScrollPaintEffect from './components/ScrollPaintEffect';
-import { ServiciosPage } from './components/ServiciosPage';
+import { ServiciosPage, type ServicioCategory } from './components/ServiciosPage';
 import { MetodoPage } from './components/MetodoPage';
 import { ProyectosPage } from './components/ProyectosPage';
 import { GoogleGenAI } from "@google/genai";
@@ -154,7 +154,8 @@ const FAQItem = ({ question, answer }: { question: string; answer: string }) => 
 
 const App: React.FC = () => {
   const [currentView, setCurrentView] = useState<'home' | 'servicios' | 'metodo' | 'proyectos'>('home');
-  const [pisoImage, setPisoImage] = useState("https://replicate.delivery/yhqm/iUffNueYw6S7M6M6p0v3qP9Q2Z2F2W2B2N2E2Y2Z2R2B2L2S2A/out-0.png");
+  const [serviciosCategory, setServiciosCategory] = useState<ServicioCategory>('residencial');
+  const [pisoImage, setPisoImage] = useState("/home/pintura-de-pisos.jpg");
   const [isGenerating, setIsGenerating] = useState(false);
 
   // States for contact form
@@ -177,7 +178,7 @@ const App: React.FC = () => {
     const img = new Image();
     img.src = pisoImage;
     img.onerror = () => {
-      setPisoImage("https://images.unsplash.com/photo-1589939705384-5185137a7f0f?auto=format&fit=crop&q=80&w=1200");
+      setPisoImage("/home/pintura-de-pisos.jpg");
     };
   }, []);
 
@@ -226,10 +227,22 @@ const App: React.FC = () => {
     );
   }
 
-  const handleNavigateView = (view: 'home' | 'servicios' | 'metodo' | 'proyectos') => {
+  const handleNavigateView = (
+    view: 'home' | 'servicios' | 'metodo' | 'proyectos',
+    category?: ServicioCategory
+  ) => {
+    if (category) setServiciosCategory(category);
     setCurrentView(view);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
+
+  const handleNavigateToServicios = (category: ServicioCategory) => {
+    setServiciosCategory(category);
+    setCurrentView('servicios');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const bentoCardClass = 'cursor-pointer focus-within:ring-2 focus-within:ring-blue-500 focus-within:ring-offset-2';
 
   const handleScrollToSection = (sectionId: string) => {
     if (currentView !== 'home') {
@@ -259,13 +272,13 @@ const App: React.FC = () => {
     <div className="min-h-screen text-slate-900 bg-stone-50 selection:bg-blue-100 selection:text-blue-900">
       
       {/* Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-[60] px-4 md:px-6 py-4 md:py-8">
-        <div className="max-w-7xl mx-auto flex justify-between items-center glass px-5 md:px-10 py-3 md:py-5 rounded-full shadow-lg">
-          <div className="flex items-center space-x-3 md:space-x-4 group cursor-pointer" onClick={() => handleNavigateView('home')}>
-            <div className="w-8 h-8 md:w-10 md:h-10 bg-black rounded-full flex items-center justify-center text-white font-bold text-xs md:text-sm transition-transform group-hover:rotate-12 shadow-md">PJ</div>
-            <div className="flex flex-col">
-              <span className="text-lg md:text-xl font-bold tracking-tighter uppercase font-display leading-none">Pinturas<span className="text-blue-600">Japri</span></span>
-              <span className="text-[7px] md:text-[8px] uppercase tracking-[0.3em] md:tracking-[0.4em] text-slate-400 font-bold">Valencia</span>
+      <nav className="fixed top-0 left-0 right-0 z-[60] px-3 sm:px-4 md:px-6 py-3 md:py-8">
+        <div className="max-w-7xl mx-auto flex justify-between items-center gap-2 glass px-3 sm:px-5 md:px-10 py-2.5 sm:py-3 md:py-5 rounded-full shadow-lg">
+          <div className="flex items-center space-x-2 sm:space-x-3 md:space-x-4 group cursor-pointer flex-shrink-0 min-w-0" onClick={() => handleNavigateView('home')}>
+            <div className="w-7 h-7 sm:w-8 sm:h-8 md:w-10 md:h-10 bg-black rounded-full flex items-center justify-center text-white font-bold text-[10px] sm:text-xs md:text-sm transition-transform group-hover:rotate-12 shadow-md">PJ</div>
+            <div className="flex flex-col min-w-0">
+              <span className="text-sm sm:text-lg md:text-xl font-bold tracking-tighter uppercase font-display leading-none truncate">Pinturas<span className="text-blue-600">Japri</span></span>
+              <span className="hidden sm:block text-[7px] md:text-[8px] uppercase tracking-[0.3em] md:tracking-[0.4em] text-slate-400 font-bold">Valencia</span>
             </div>
           </div>
           
@@ -308,28 +321,42 @@ const App: React.FC = () => {
             </button>
           </div>
           
-          <div className="lg:hidden flex items-center space-x-0.5 sm:space-x-1">
+          <div className="lg:hidden flex items-center gap-0.5 sm:gap-1 min-w-0 flex-1 justify-end overflow-x-auto [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden py-0.5 pl-1">
+            <button 
+              onClick={() => handleNavigateView('home')} 
+              className={`flex-shrink-0 text-[9px] sm:text-[10px] font-bold uppercase tracking-wide px-1.5 sm:px-2 py-1.5 rounded-full transition-colors ${
+                currentView === 'home' ? 'text-blue-600 bg-blue-50' : 'text-slate-600 hover:text-blue-600'
+              }`}
+            >
+              Inicio
+            </button>
             <button 
               onClick={() => handleNavigateView('servicios')} 
-              className="text-[10px] sm:text-xs font-bold uppercase tracking-wide text-slate-600 px-1 py-1.5 hover:text-blue-600"
+              className={`flex-shrink-0 text-[9px] sm:text-[10px] font-bold uppercase tracking-wide px-1.5 sm:px-2 py-1.5 rounded-full transition-colors ${
+                currentView === 'servicios' ? 'text-blue-600 bg-blue-50' : 'text-slate-600 hover:text-blue-600'
+              }`}
             >
               Servicios
             </button>
             <button 
               onClick={() => handleNavigateView('proyectos')} 
-              className="text-[10px] sm:text-xs font-bold uppercase tracking-wide text-slate-600 px-1 py-1.5 hover:text-blue-600"
+              className={`flex-shrink-0 text-[9px] sm:text-[10px] font-bold uppercase tracking-wide px-1.5 sm:px-2 py-1.5 rounded-full transition-colors ${
+                currentView === 'proyectos' ? 'text-blue-600 bg-blue-50' : 'text-slate-600 hover:text-blue-600'
+              }`}
             >
               Proyectos
             </button>
             <button 
               onClick={() => handleNavigateView('metodo')} 
-              className="text-[10px] sm:text-xs font-bold uppercase tracking-wide text-slate-600 px-1 py-1.5 hover:text-blue-600"
+              className={`flex-shrink-0 text-[9px] sm:text-[10px] font-bold uppercase tracking-wide px-1.5 sm:px-2 py-1.5 rounded-full transition-colors ${
+                currentView === 'metodo' ? 'text-blue-600 bg-blue-50' : 'text-slate-600 hover:text-blue-600'
+              }`}
             >
               Método
             </button>
             <button 
               onClick={handleContactAction} 
-              className="bg-black text-white px-2.5 py-2 rounded-full text-[9px] sm:text-xs font-bold uppercase tracking-wider shadow-md hover:bg-blue-600"
+              className="flex-shrink-0 bg-black text-white px-2 sm:px-2.5 py-1.5 sm:py-2 rounded-full text-[8px] sm:text-[9px] font-bold uppercase tracking-wider shadow-md hover:bg-blue-600 ml-0.5"
             >
               Contacto
             </button>
@@ -375,7 +402,13 @@ const App: React.FC = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-8 h-auto">
               {/* 1. Pintura de Pisos - IMAGEN PROPORCIONADA POR USUARIO */}
-              <div className="md:col-span-8 bg-stone-900 rounded-[2.5rem] md:rounded-[3rem] overflow-hidden relative group h-[450px] md:h-[650px] bento-card shadow-xl">
+              <div 
+                role="button"
+                tabIndex={0}
+                onClick={() => handleNavigateToServicios('residencial')}
+                onKeyDown={(e) => e.key === 'Enter' && handleNavigateToServicios('residencial')}
+                className={`md:col-span-8 bg-stone-900 rounded-[2.5rem] md:rounded-[3rem] overflow-hidden relative group h-[450px] md:h-[650px] bento-card shadow-xl ${bentoCardClass}`}
+              >
                 <img 
                   src={pisoImage} 
                   referrerPolicy="no-referrer"
@@ -385,7 +418,12 @@ const App: React.FC = () => {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
                 
                 <div className="absolute top-6 md:top-8 right-6 md:right-8 z-20">
-                  <button onClick={generateNewPisoInspiration} disabled={isGenerating} className="glass px-4 md:px-6 py-2 md:py-3 rounded-full text-white text-[8px] md:text-[9px] font-bold uppercase tracking-widest hover:bg-white hover:text-blue-600 transition-all disabled:opacity-50">
+                  <button 
+                    type="button"
+                    onClick={(e) => { e.stopPropagation(); generateNewPisoInspiration(); }} 
+                    disabled={isGenerating} 
+                    className="glass px-4 md:px-6 py-2 md:py-3 rounded-full text-white text-[8px] md:text-[9px] font-bold uppercase tracking-widest hover:bg-white hover:text-blue-600 transition-all disabled:opacity-50"
+                  >
                     {isGenerating ? "Mezclando..." : "Inspiración IA"}
                   </button>
                 </div>
@@ -398,7 +436,13 @@ const App: React.FC = () => {
               </div>
 
               {/* 2. Chalets - IMAGEN DE CHALET */}
-              <div className="md:col-span-4 bg-white border border-stone-200 rounded-[2.5rem] md:rounded-[3rem] p-8 md:p-12 flex flex-col justify-between group bento-card shadow-sm h-full md:row-span-2">
+              <div 
+                role="button"
+                tabIndex={0}
+                onClick={() => handleNavigateToServicios('exterior')}
+                onKeyDown={(e) => e.key === 'Enter' && handleNavigateToServicios('exterior')}
+                className={`md:col-span-4 bg-white border border-stone-200 rounded-[2.5rem] md:rounded-[3rem] p-8 md:p-12 flex flex-col justify-between group bento-card shadow-sm h-full md:row-span-2 ${bentoCardClass}`}
+              >
                  <div className="mb-6">
                    <div className="text-blue-600 mb-6 md:mb-10"><svg className="w-10 h-10 md:w-12 md:h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg></div>
                    <h3 className="text-2xl md:text-4xl font-bold mb-4 md:mb-6 tracking-tighter">Pintura de <br />Chalets</h3>
@@ -408,10 +452,15 @@ const App: React.FC = () => {
               </div>
 
               {/* 3. Casas - IMAGEN DE FACHADA DE CASA */}
-              <div className="md:col-span-8 bg-stone-100 rounded-[2.5rem] md:rounded-[3rem] overflow-hidden relative group h-[450px] md:h-[600px] bento-card shadow-xl">
+              <div 
+                role="button"
+                tabIndex={0}
+                onClick={() => handleNavigateToServicios('exterior')}
+                onKeyDown={(e) => e.key === 'Enter' && handleNavigateToServicios('exterior')}
+                className={`md:col-span-8 bg-stone-100 rounded-[2.5rem] md:rounded-[3rem] overflow-hidden relative group h-[450px] md:h-[600px] bento-card shadow-xl ${bentoCardClass}`}
+              >
                  <img 
-                   src="https://images.unsplash.com/photo-1518780664697-55e3ad937233?auto=format&fit=crop&q=80&w=1200" 
-                   referrerPolicy="no-referrer"
+                   src="/home/pintura-de-casas.jpg" 
                    className="absolute inset-0 w-full h-full object-cover transition-all duration-1000 group-hover:scale-110" 
                    alt="Fachada de casa tradicional" 
                  />
@@ -425,10 +474,15 @@ const App: React.FC = () => {
               </div>
 
               {/* 4. Quitar Gotelé */}
-              <div className="md:col-span-4 bg-black rounded-[2.5rem] md:rounded-[3rem] overflow-hidden relative group h-[300px] md:h-[400px] bento-card shadow-xl">
+              <div 
+                role="button"
+                tabIndex={0}
+                onClick={() => handleNavigateToServicios('residencial')}
+                onKeyDown={(e) => e.key === 'Enter' && handleNavigateToServicios('residencial')}
+                className={`md:col-span-4 bg-black rounded-[2.5rem] md:rounded-[3rem] overflow-hidden relative group h-[300px] md:h-[400px] bento-card shadow-xl ${bentoCardClass}`}
+              >
                  <img 
-                   src="https://images.unsplash.com/photo-1504148455328-c376907d081c?auto=format&fit=crop&q=80&w=1200" 
-                   referrerPolicy="no-referrer"
+                   src="/home/quitar-gotele.jpg" 
                    className="absolute inset-0 w-full h-full object-cover opacity-60 transition-all duration-700 group-hover:scale-110" 
                    alt="Alisado maestro" 
                  />
@@ -441,7 +495,13 @@ const App: React.FC = () => {
               </div>
 
               {/* 5. Decorativa */}
-              <div className="md:col-span-8 bg-stone-950 rounded-[2.5rem] md:rounded-[3rem] overflow-hidden relative group h-[350px] md:h-[500px] bento-card shadow-2xl">
+              <div 
+                role="button"
+                tabIndex={0}
+                onClick={() => handleNavigateToServicios('tecnico')}
+                onKeyDown={(e) => e.key === 'Enter' && handleNavigateToServicios('tecnico')}
+                className={`md:col-span-8 bg-stone-950 rounded-[2.5rem] md:rounded-[3rem] overflow-hidden relative group h-[350px] md:h-[500px] bento-card shadow-2xl ${bentoCardClass}`}
+              >
                 <img src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&q=80&w=1200" referrerPolicy="no-referrer" className="absolute inset-0 w-full h-full object-cover opacity-40 transition-all duration-1000 group-hover:scale-110" alt="Decorativa" />
                 <div className="absolute bottom-8 md:bottom-12 left-8 md:left-12 right-8 md:left-12 text-white">
                   <h3 className="text-3xl md:text-4xl font-display italic mb-4 md:mb-6">Pintura Decorativa</h3>
@@ -450,7 +510,13 @@ const App: React.FC = () => {
               </div>
 
               {/* 6. Locales */}
-              <div className="md:col-span-4 bg-white rounded-[2.5rem] md:rounded-[3rem] overflow-hidden relative group h-[350px] md:h-full bento-card shadow-xl">
+              <div 
+                role="button"
+                tabIndex={0}
+                onClick={() => handleNavigateToServicios('comercial')}
+                onKeyDown={(e) => e.key === 'Enter' && handleNavigateToServicios('comercial')}
+                className={`md:col-span-4 bg-white rounded-[2.5rem] md:rounded-[3rem] overflow-hidden relative group h-[350px] md:h-full bento-card shadow-xl ${bentoCardClass}`}
+              >
                  <img 
                    src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&q=80&w=1200" 
                    referrerPolicy="no-referrer"
@@ -583,6 +649,7 @@ const App: React.FC = () => {
         <ServiciosPage 
           onBackToHome={() => handleNavigateView('home')} 
           onNavigateToContact={handleContactAction}
+          initialCategory={serviciosCategory}
         />
       )}
 
