@@ -616,7 +616,6 @@ const App: React.FC = () => {
               <div className="space-y-2 md:space-y-4">
                 <FAQItem question="¿Cuánto tardan en pintar un piso?" answer="Un piso estándar de 90m² suele completarse en 3-4 días con acabados de alta calidad y limpieza total." />
                 <FAQItem question="¿Incluyen el material en el presupuesto?" answer="Sí, trabajamos con marcas líderes (Titan, Valentine, Jotun Majestic, etc.) y todo el material necesario de primera línea está incluido para garantizar el mejor resultado." />
-                <FAQItem question="¿Tienen seguro de responsabilidad civil?" answer="Por supuesto. Contamos con todas las coberturas reglamentarias y seguros necesarios para su total tranquilidad durante la obra." />
               </div>
             </div>
           </section>
