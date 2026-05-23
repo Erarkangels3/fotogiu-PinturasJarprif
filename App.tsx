@@ -240,19 +240,29 @@ const App: React.FC = () => {
     );
   }
 
+  const scrollPageToTop = () => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+  };
+
   const handleNavigateView = (
     view: 'home' | 'servicios' | 'metodo' | 'proyectos',
     category?: ServicioCategory
   ) => {
     if (category) setServiciosCategory(category);
+    closeMobileMenu();
     setCurrentView(view);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    scrollPageToTop();
+    window.setTimeout(scrollPageToTop, 50);
+    window.setTimeout(scrollPageToTop, 150);
   };
 
   const handleNavigateToServicios = (category: ServicioCategory) => {
     setServiciosCategory(category);
+    closeMobileMenu();
     setCurrentView('servicios');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    scrollPageToTop();
+    window.setTimeout(scrollPageToTop, 50);
+    window.setTimeout(scrollPageToTop, 150);
   };
 
   const bentoCardClass = 'cursor-pointer focus-within:ring-2 focus-within:ring-blue-500 focus-within:ring-offset-2';
