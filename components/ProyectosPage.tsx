@@ -16,6 +16,7 @@ export const ProyectosPage: React.FC<ProyectosPageProps> = ({ onBackToHome, onNa
   const [sliderPos1, setSliderPos1] = useState<number>(50);
   const [sliderPos2, setSliderPos2] = useState<number>(50);
   const [sliderPos3, setSliderPos3] = useState<number>(50);
+  const [sliderPos4, setSliderPos4] = useState<number>(50);
 
   // Active view inside projects
   const [filter, setFilter] = useState<'todos' | 'residencial' | 'exterior' | 'lacados'>('todos');
@@ -31,6 +32,10 @@ export const ProyectosPage: React.FC<ProyectosPageProps> = ({ onBackToHome, onNa
 
   const handleSliderChange3 = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSliderPos3(Number(e.target.value));
+  };
+
+  const handleSliderChange4 = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSliderPos4(Number(e.target.value));
   };
 
   return (
@@ -346,6 +351,88 @@ export const ProyectosPage: React.FC<ProyectosPageProps> = ({ onBackToHome, onNa
                 <div>
                   <strong className="text-slate-800">Alisado previo:</strong> Eliminamos la textura y el patrón antiguo con masilla y lijado fino antes de aplicar la base, asegurando un acabado liso y duradero.
                 </div>
+              </div>
+            </div>
+          </section>
+
+          {/* PROYECTO 4: Dormitorio pared de acento */}
+          <section className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            <div className="lg:col-span-7 max-w-lg mx-auto lg:max-w-none lg:mx-0 w-full">
+              <div className="relative aspect-[3/4] rounded-3xl overflow-hidden shadow-2xl border border-stone-200 select-none">
+                
+                <div className="absolute inset-0 bg-stone-250">
+                  <img 
+                    src="/projects/jarpri/proyecto-4-antes.jpg" 
+                    alt="Dormitorio en proceso de preparación y masillado - Antes Japri" 
+                    className="w-full h-full object-cover object-center"
+                  />
+                  <div className="absolute top-4 left-4 bg-red-600/90 text-white font-mono font-bold text-[9px] uppercase tracking-widest px-3 py-1.5 rounded-md z-20">
+                    ANTES - Preparación y masillado de pared
+                  </div>
+                </div>
+
+                <div 
+                  className="absolute inset-0 pointer-events-none"
+                  style={{ clipPath: `polygon(0 0, ${sliderPos4}% 0, ${sliderPos4}% 100%, 0 100%)` }}
+                >
+                  <img 
+                    src="/projects/jarpri/proyecto-4-despues.jpg" 
+                    alt="Dormitorio con pared gris acabada y laterales blancos - Después Japri" 
+                    className="w-full h-full object-cover object-center"
+                  />
+                  <div className="absolute top-4 right-4 bg-emerald-600/90 text-white font-mono font-bold text-[9px] uppercase tracking-widest px-3 py-1.5 rounded-md z-25">
+                    DESPUÉS - Pared gris mate y acabado limpio
+                  </div>
+                </div>
+
+                <div 
+                  className="absolute top-0 bottom-0 w-[3px] bg-white cursor-ew-resize z-30 shadow-2xl"
+                  style={{ left: `${sliderPos4}%` }}
+                >
+                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-10 h-10 bg-blue-600 hover:bg-black text-white rounded-full flex items-center justify-center shadow-2xl border-2 border-white transition-colors">
+                    <ArrowLeftRight className="w-4 h-4" />
+                  </div>
+                </div>
+
+                <input 
+                  type="range" 
+                  min="0" 
+                  max="100" 
+                  value={sliderPos4} 
+                  onChange={handleSliderChange4}
+                  className="absolute inset-0 opacity-0 w-full h-full cursor-ew-resize z-40" 
+                />
+              </div>
+              <div className="flex justify-between text-[10px] font-bold text-slate-400 mt-4 uppercase tracking-widest">
+                <span>← Arrastre para comparar el dormitorio</span>
+                <span>Pulsación táctil o arrastre el círculo</span>
+              </div>
+            </div>
+
+            <div className="lg:col-span-5 flex flex-col justify-center">
+              <span className="text-blue-600 font-bold tracking-[0.3em] uppercase text-[10px] mb-3 md:mb-4 block">Proyecto 4 · Valencia · Dormitorio</span>
+              <h3 className="text-3xl md:text-5xl font-display italic leading-tight text-slate-950 mb-6">
+                Dormitorio: <br />Pared de Acento en Gris
+              </h3>
+              
+              <p className="text-slate-500 font-light leading-relaxed mb-6 text-sm">
+                Renovación interior de dormitorio con foco en la pared de cabecera. Partíamos de una superficie oscura en pleno proceso de saneamiento, con remates de masilla a la vista y la estancia protegida para el trabajo. Japri completó el alisado, la imprimación y la aplicación de pintura plástica mate en gris contemporáneo, contrastando con laterales en blanco puro.
+              </p>
+
+              <div className="space-y-4 border-t border-stone-200 pt-6">
+                <div>
+                  <h4 className="text-xs font-bold uppercase tracking-wider text-slate-800 mb-1">Estado anterior:</h4>
+                  <p className="text-xs text-slate-500 font-light">Pared negra en fase de preparación, con parches de masilla visibles, cableado a la vista y mobiliario protegido durante la obra.</p>
+                </div>
+                <div>
+                  <h4 className="text-xs font-bold uppercase tracking-wider text-blue-600 mb-1">Resultado final:</h4>
+                  <p className="text-xs text-slate-500 font-light">Acabado gris mate uniforme en la pared de acento, laterales blancos y un conjunto limpio, luminoso y listo para el amueblamiento final.</p>
+                </div>
+              </div>
+
+              <div className="mt-8 flex gap-4">
+                <span className="px-4 py-2 bg-stone-100 text-slate-700 text-[10px] font-bold uppercase tracking-wider rounded-lg">3 Días de ejecución</span>
+                <span className="px-4 py-2 bg-stone-100 text-slate-700 text-[10px] font-bold uppercase tracking-wider rounded-lg">Garantía Japri 3 años</span>
               </div>
             </div>
           </section>
